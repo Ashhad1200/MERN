@@ -21,7 +21,6 @@ const Login = async (req, res) => {
     }
 };
 
-
 const Registration = async (req, res) => {
     try {
         const { username, email, password, phone } = req.body;
