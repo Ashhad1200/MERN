@@ -1,4 +1,7 @@
-const Home = async (req, res) => {
+
+
+
+const About = async (req, res) => {
     try {
         res.status(200).send(`
             <!DOCTYPE html>
@@ -6,7 +9,7 @@ const Home = async (req, res) => {
             <head>
                 <meta charset="UTF-8">
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                <title>Home Page</title>
+                <title>About Page</title>
                 <style>
                     body {
                         font-family: Arial, sans-serif;
@@ -40,8 +43,8 @@ const Home = async (req, res) => {
                 </style>
             </head>
             <body>
-                <h1>Welcome to the Home Page</h1>
-                <button onclick="window.location.href='/about/aboutPage'">Go to about Page</button>
+                <h1>Welcome to the About Page</h1>
+                <button onclick="window.location.href='/'">Go to Home Page</button>
             </body>
             </html>
         `);
@@ -51,4 +54,4 @@ const Home = async (req, res) => {
     }
 };
 
-module.exports = Home;
+module.exports = About;

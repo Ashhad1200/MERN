@@ -1,13 +1,18 @@
 const express = require('express');
+const connectDb = require('./DB/db');
 const authRoutes = require('./Routes/authRoutes');
 const homeRoutes = require('./Routes/homeRoutes');
-const connectDb = require('./DB/db');
+const aboutRoutes = require('./Routes/aboutRoutes'); // Corrected here
 
 const app = express();
 app.use(express.json());
-app.use('/auth',authRoutes)
-app.use('/',homeRoutes)
+app.use('/', homeRoutes);
+app.use('/about', aboutRoutes); // The route seems fine
 
-connectDb().then(()=>{
-    app.listen(8000,()=>{console.log('server started')});
-})
+app.use('/auth', authRoutes);
+
+connectDb().then(() => {
+    app.listen(8000, () => {
+        console.log('server started');
+    });
+});
