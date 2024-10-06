@@ -68,4 +68,23 @@ const Registration = async (req, res) => {
   }
 };
 
-module.exports = { Login, Registration };
+const getUsers = async () => {
+  try {
+    const users = await User.find();
+    return users;
+} catch (err) {
+    console.error('Error fetching users:', err);
+    throw err;
+}
+};
+
+const getUsersById = async (_id) => {
+  try {
+    const users = await User.findOne({_id});
+    return users;
+} catch (err) {
+    console.error('Error fetching users:', err);
+    throw err;
+}
+};
+module.exports = { Login, Registration, getUsers, getUsersById };
