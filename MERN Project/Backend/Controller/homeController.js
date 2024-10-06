@@ -2,13 +2,11 @@ const { getUsers, getUsersById } = require("./authController");
 
 const Home = async (req, res) => {
   try {
-    const userId = "6700cd189964f4a0eec2f2ef";
-
     const allUsers = await getUsers();
     // console.log(users);
-    
-    const userById = await getUsersById(userId);
-    console.log(userById);
+
+    // const userById = await getUsersById(userId);
+    // console.log(userById);
 
     // Send the HTML response with the user list
     res.status(200).send(`
@@ -85,13 +83,11 @@ const Home = async (req, res) => {
             <div class="card-container">
                 ${allUsers
                   .map(
-                    (user) => `
-                    <div class="card">
-                        <p><strong>User Name:</strong> ${user.username}</p>
-                        <p><strong>Email:</strong> ${user.email}</p>
-                        <p><strong>Phone Number:</strong> ${user.phone}</p>
-                    </div>
-                `
+                    (user) =>
+                `<div class="card" onclick="window.location.href='/user/${user._id}'">
+                    <p><strong>User Name:</strong> ${user.username}</p>
+                    <p><strong>Email:</strong> ${user.email}</p>
+                </div>`
                   )
                   .join("")}
             </div>
