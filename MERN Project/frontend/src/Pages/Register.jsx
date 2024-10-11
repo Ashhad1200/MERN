@@ -1,24 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react';
 
 const Register = () => {
-
   const [user, setUser] = useState({
     username: '',
     email: '',
     password: '',
-    phone : ''
+    phone: '',
   });
 
   const handleChange = (event) => {
-    let name = event.target.name;
-    let value = event.target.value;
-    setUser({...user, [name]: value });
-  }
+    const { name, value } = event.target;
+    setUser({ ...user, [name]: value });
+  };
 
   const handleSubmit = (event) => {
-    event.preventDefault()
+    event.preventDefault();
     console.log(user);
-  }
+  };
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
@@ -29,8 +27,7 @@ const Register = () => {
       </div>
 
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6">
-
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div>
             <label className="block text-sm font-medium leading-6 text-gray-900">
               Username
@@ -90,7 +87,7 @@ const Register = () => {
             <div className="mt-2">
               <input
                 name="phone"
-                type="number"
+                type="tel" // Changed type to 'tel' for better phone input handling
                 required
                 value={user.phone}
                 onChange={handleChange}
@@ -107,12 +104,10 @@ const Register = () => {
               Register
             </button>
           </div>
-
         </form>
-
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;
