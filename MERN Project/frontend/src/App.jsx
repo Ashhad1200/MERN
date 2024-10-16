@@ -11,8 +11,8 @@ import Services from './Pages/Services'
 function App() {
   return (
     <>
-    <Navbar/>
       <BrowserRouter>
+    <Navbar/>
         <Routes >
           <Route path='/' element={<Home />} />
           <Route path='/about' element={<About />} />
@@ -21,8 +21,8 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/register' element={<Register />} />
         </Routes>
-      </BrowserRouter>
     {/* <Footer /> */}
+      </BrowserRouter>
     </>
   )
 }

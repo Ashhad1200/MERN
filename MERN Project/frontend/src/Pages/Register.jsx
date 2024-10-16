@@ -32,7 +32,7 @@ const Register = () => {
       if (response.status === 201) {
         setSuccessMessage("Registration successful!");
         setErrorMessage("");
-        
+
         // Clear the form
         setUser({
           username: "",
