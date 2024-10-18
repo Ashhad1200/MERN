@@ -1,23 +1,49 @@
 import { useState } from "react";
 
 const Login = () => {
-
-
   const [user, setUser] = useState({
     username: "",
     password: ""
   });
 
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
+
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setUser({ ...user, [name]: value });
+    setUser((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     console.log(user);
-  };
+    try {
+      const response = await fetch("http://localhost:8000/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(user),
+      });
 
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccessMessage(data.success);
+        setErrorMessage("");
+
+        // Clear the form
+        setUser({ username: "", password: "" });
+      } else {
+        setSuccessMessage("");
+        setErrorMessage(data.error);
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      setSuccessMessage("");
+      setErrorMessage(data.error);
+    }
+  };
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-black text-white">
@@ -28,6 +54,18 @@ const Login = () => {
           </h2>
 
           <form className="space-y-6 mt-6" onSubmit={handleSubmit}>
+            {errorMessage && (
+              <p className="text-red-500 text-sm">{errorMessage}</p>
+            )}
+            {successMessage && (<>
+              <div class="flex items-center p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
+                <svg class="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM9 15H11V13H9v2zM9 11H11V5H9v6z" />
+                </svg>
+                <span class="font-medium">Success!</span> {successMessage}
+              </div>
+            </>
+            )}
             <div>
               <label className="block text-sm font-medium leading-6 text-white">
                 Username
@@ -69,9 +107,12 @@ const Login = () => {
               </button>
             </div>
           </form>
-        <div className="text-sm font-light text-[#6B7280] ">Don't have an account? <a href="/register" className="font-medium text-[#4F46E5] hover:underline">Register</a>
-        </div>
-
+          <div className="text-sm font-light text-[#6B7280]">
+            Don't have an account?{" "}
+            <a href="/register" className="font-medium text-[#4F46E5] hover:underline">
+              Register
+            </a>
+          </div>
         </div>
       </div>
     </div>

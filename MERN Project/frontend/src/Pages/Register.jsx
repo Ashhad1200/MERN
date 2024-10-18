@@ -30,7 +30,7 @@ const Register = () => {
       const data = await response.json();
 
       if (response.status === 201) {
-        setSuccessMessage("Registration successful!");
+        setSuccessMessage(data.success);
         setErrorMessage("");
 
         // Clear the form
@@ -42,7 +42,7 @@ const Register = () => {
         });
       } else {
         setSuccessMessage("");
-        setErrorMessage(data.error || "Something went wrong");
+        setErrorMessage(data.error);
       }
     } catch (error) {
       console.error("Error during registration:", error);

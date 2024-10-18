@@ -59,7 +59,7 @@ const Registration = async (req, res) => {
       password: hashedPassword,
       phone,
     });
-
+    res.status(201).json({success: "User created successfully"});
     // Return newly created user
     return res.status(201).json({ userDetails: userCreated });
   } catch (error) {
