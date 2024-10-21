@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -9,6 +10,7 @@ const Register = () => {
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+  const [visible, setVisible] = useState(true); // Manage notification visibility
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -51,6 +53,19 @@ const Register = () => {
     }
   };
 
+  useEffect(() => {
+    if (errorMessage || successMessage) {
+      setVisible(true); // Show notification when there's a message
+      const timer = setTimeout(() => {
+        setVisible(false);
+        setErrorMessage(""); // Clear error message after hiding
+        setSuccessMessage(""); // Clear success message after hiding
+      }, 5000); // Hide after 5 seconds
+
+      return () => clearTimeout(timer); // Cleanup timer on unmount or message change
+    }
+  }, [errorMessage, successMessage]);
+
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 bg-black text-white">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -59,18 +74,27 @@ const Register = () => {
             Register your account
           </h2>
 
-          <form className="space-y-6 mt-6" onSubmit={handleSubmit}>
-            {errorMessage && (
-              <p className="text-red-500 text-sm">{errorMessage}</p>
-            )}
-            {successMessage && (
-              <p className="text-green-500 text-sm">{successMessage}</p>
-            )}
+          {visible && errorMessage && (
+            <div className="flex items-center p-4 mb-4 text-sm text-red-500 bg-red-100 rounded-lg" role="alert">
+              <svg className="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM9 15H11V13H9v2zM9 11H11V5H9v6z" />
+              </svg>
+              <span className="font-medium">Error: {errorMessage}!</span>
+            </div>
+          )}
 
+          {visible && successMessage && (
+            <div className="flex items-center p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg" role="alert">
+              <svg className="w-5 h-5 mr-2" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM9 15H11V13H9v2zM9 11H11V5H9v6z" />
+              </svg>
+              <span className="font-medium">Success: {successMessage}!</span>
+            </div>
+          )}
+
+          <form className="space-y-6 mt-6" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-sm font-medium leading-6 text-white">
-                Username
-              </label>
+              <label className="block text-sm font-medium leading-6 text-white">Username</label>
               <div className="mt-2">
                 <input
                   name="username"
@@ -84,9 +108,7 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium leading-6 text-white">
-                Email address
-              </label>
+              <label className="block text-sm font-medium leading-6 text-white">Email address</label>
               <div className="mt-2">
                 <input
                   name="email"
@@ -100,9 +122,7 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium leading-6 text-white">
-                Password
-              </label>
+              <label className="block text-sm font-medium leading-6 text-white">Password</label>
               <div className="mt-2">
                 <input
                   name="password"
@@ -116,9 +136,7 @@ const Register = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium leading-6 text-white">
-                Phone
-              </label>
+              <label className="block text-sm font-medium leading-6 text-white">Phone</label>
               <div className="mt-2">
                 <input
                   name="phone"
@@ -142,12 +160,7 @@ const Register = () => {
           </form>
           <div className="text-sm font-light text-[#6B7280]">
             Already have an account?{" "}
-            <a
-              href="/login"
-              className="font-medium text-[#4F46E5] hover:underline"
-            >
-              Login
-            </a>
+            <Link to="/login" className="font-medium text-[#4F46E5] hover:underline">Login</Link>
           </div>
         </div>
       </div>
