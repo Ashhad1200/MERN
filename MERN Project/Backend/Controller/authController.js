@@ -23,7 +23,10 @@ const Login = async (req, res) => {
     }
 
     // Success response
-    return res.status(200).json({ success: "Logged in successfully" });
+    return res.status(200).json({
+       success: "Logged in successfully" ,
+      token: await userCreated.genrateToken()
+      });
   } catch (error) {
     console.error("Login error:", error);
     return res.status(500).json({ error: "Internal server error" });
@@ -64,6 +67,7 @@ const Registration = async (req, res) => {
     return res.status(201).json({
       success: "User created successfully",
       userDetails: userCreated,
+      token: await userCreated.genrateToken()
     });
 
   } catch (error) {
