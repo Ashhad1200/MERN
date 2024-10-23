@@ -1,8 +1,8 @@
-const { getUsers, getUsersById } = require("./authController");
+const { GetUsers, getUsersById } = require("./authController");
 
 const Home = async (req, res) => {
   try {
-    const allUsers = await getUsers();
+    const allUsers = await GetUsers();
     // console.log(users);
 
     // const userById = await getUsersById(userId);
