@@ -17,3 +17,19 @@ export const useListUsers = () => {
   });
   return query;
 };
+
+export const useUser = (_id) => {
+  const query = useQuery({
+    queryKey: ["user" ,_id],
+    queryFn: async () => {
+      const response = await fetch(`http://localhost:8000/auth/users/${_id}`);
+      if (!response.ok) {
+        throw new Error(`Error fetching users: ${response.statusText}`);
+      }
+      return response.json();
+    },
+    staleTime: Infinity,
+    cacheTime: Infinity,
+  });
+  return query;
+};

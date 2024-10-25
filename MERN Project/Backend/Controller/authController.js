@@ -86,13 +86,13 @@ const GetUsers = async (req, res) => {
   }
 };
 
-const getUsersById = async (_id) => {
+const GetUsersById = async (_id) => {
   try {
-    const users = await User.findOne({_id});
+    const users = await User.findById(_id).exec();;
     return users;
 } catch (err) {
     console.error('Error fetching users:', err);
     throw err;
 }
 };
-module.exports = { Login, Registration, GetUsers, getUsersById };
+module.exports = { Login, Registration, GetUsers, GetUsersById };

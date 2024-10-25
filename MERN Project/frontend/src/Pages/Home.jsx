@@ -1,4 +1,5 @@
-import UsersList from './Users'
+import UsersList from "../Components/Users"
+
 
 const Home = () => {
   return (
