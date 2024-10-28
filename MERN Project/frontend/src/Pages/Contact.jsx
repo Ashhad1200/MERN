@@ -58,38 +58,22 @@ const ContactForm = () => {
       </h2>
 
       {visible && errorMessage && (
-        <div
-          className="flex items-center p-4 mb-4 text-sm text-red-500 bg-red-100 rounded-lg"
-          role="alert"
-        >
-          <svg
-            className="w-5 h-5 mr-2"
-            aria-hidden="true"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM9 15H11V13H9v2zM9 11H11V5H9v6z" />
-          </svg>
-          <span className="font-medium">Error: {errorMessage}!</span>
-        </div>
-      )}
+            <div className="fixed top-4 right-4 p-4 mb-4 text-sm text-red-500 bg-red-100 border border-red-200 rounded-lg shadow-md" role="alert">
+              <svg className="w-5 h-5 mr-2 inline" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM9 15H11V13H9v2zM9 11H11V5H9v6z" />
+              </svg>
+              <span className="font-medium">Error: {errorMessage}!</span>
+            </div>
+          )}
 
-      {visible && successMessage && (
-        <div
-          className="flex items-center p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg"
-          role="alert"
-        >
-          <svg
-            className="w-5 h-5 mr-2"
-            aria-hidden="true"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM9 15H11V13H9v2zM9 11H11V5H9v6z" />
-          </svg>
-          <span className="font-medium">Success: {successMessage}!</span>
-        </div>
-      )}
+          {visible && successMessage && (
+            <div className="fixed top-4 right-4 p-4 mb-4 text-sm text-green-700 bg-green-100 border border-green-200 rounded-lg shadow-md" role="alert">
+              <svg className="w-5 h-5 mr-2 inline" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM9 15H11V13H9v2zM9 11H11V5H9v6z" />
+              </svg>
+              <span className="font-medium">Success: {successMessage}!</span>
+            </div>
+          )}
 
       <form onSubmit={handleSubmit}>
         <div className="mb-5">
