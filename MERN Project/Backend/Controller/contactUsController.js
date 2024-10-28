@@ -14,11 +14,22 @@ const FeedBackForm = async (req, res) => {
             success: "Feedback Sent successfully",
             contactDetails: feedBackCreated
         });
-        
+
     } catch (error) {
         console.error("Submission error:", error);
         return res.status(500).json({ error: "Internal server error" });
     }
 };
 
-module.exports = { FeedBackForm };
+
+const GetUserComments = async (req, res) => {
+    try {
+        const comments = await Info.find();
+        res.status(200).json(comments);
+    } catch (err) {
+        console.error('Error fetching comments:', err);
+        res.status(500).json({ message: 'Error fetching comments' });
+    }
+};
+
+module.exports = { FeedBackForm, GetUserComments };

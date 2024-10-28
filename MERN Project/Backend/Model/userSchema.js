@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
   email: { type: String, required: true },
   password: { type: String, required: true },
   phone: { type: Number, required: true },
-  joiningDate: { type: Date, default: Date.now, required: true }, 
+  joiningDate: { type: Date, default: Date.now, required: true },
   isAdmin: { type: Boolean, default: false },
 });
 
@@ -21,7 +21,7 @@ userSchema.methods.genrateToken = async () => {
         isAdmin: this.isAdmin,
       },
       "blabla",
-      {  expiresIn: "7d"}
+      { expiresIn: "7d" }
     )
   } catch (error) {
     console.error(error);

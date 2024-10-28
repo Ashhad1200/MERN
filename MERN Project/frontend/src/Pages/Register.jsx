@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useRegister } from "../Hooks/useRegister";
 
 const Register = () => {
   const [user, setUser] = useState({
@@ -11,47 +12,33 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [visible, setVisible] = useState(true); // Manage notification visibility
+  const registerMutation = useRegister();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUser({ ...user, [name]: value });
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:8000/auth/registration", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(user),
-      });
-
-      const data = await response.json();
-
-      if (response.status === 201) {
-        setSuccessMessage(data.success);
-        setErrorMessage("");
-
-        // Clear the form
-        setUser({
-          username: "",
-          email: "",
-          password: "",
-          phone: "",
+     const handleSubmit = (event) => {
+        event.preventDefault();
+        registerMutation.mutate(user, {
+            onSuccess: (data) => {
+                setSuccessMessage(data.success); // Assuming data contains a success message
+                setErrorMessage("");
+                // Clear the form
+                setUser({
+                    username: "",
+                    email: "",
+                    password: "",
+                    phone: "",
+                });
+            },
+            onError: (error) => {
+                setSuccessMessage("");
+                setErrorMessage(error.message);
+            },
         });
-      } else {
-        setSuccessMessage("");
-        setErrorMessage(data.error);
-      }
-    } catch (error) {
-      console.error("Error during registration:", error);
-      setSuccessMessage("");
-      setErrorMessage("Internal server error");
-    }
-  };
+    };
 
   useEffect(() => {
     if (errorMessage || successMessage) {

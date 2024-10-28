@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSendFeedback } from "../Hooks/useSendFeedback";
 
 const ContactForm = () => {
   const [formData, setFormData] = useState({
@@ -9,45 +10,31 @@ const ContactForm = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [visible, setVisible] = useState(false); // Start with notifications hidden
+  const feedbackMutation = useSendFeedback();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = (event) => {
     event.preventDefault();
-
-    try {
-      const response = await fetch("http://localhost:8000/contactUs/feedBack", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (response.status === 201) {
-        setSuccessMessage(data.success);
+    feedbackMutation.mutate(formData, {
+      onSuccess: (data) => {
+        setSuccessMessage(data.success); // Assuming data contains a success message
         setErrorMessage("");
-
         // Clear the form
         setFormData({
           name: "",
           email: "",
           message: "",
         });
-      } else {
+      },
+      onError: (error) => {
         setSuccessMessage("");
-        setErrorMessage(data.error);
-      }
-    } catch (error) {
-      console.error("Error during Sending Message:", error);
-      setSuccessMessage("");
-      setErrorMessage("Internal server error");
-    }
+        setErrorMessage(error.message);
+      },
+    });
   };
 
   useEffect(() => {

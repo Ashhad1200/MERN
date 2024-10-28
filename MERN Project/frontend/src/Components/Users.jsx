@@ -3,7 +3,7 @@ import { useListUsers } from "../Hooks/useUsers";
 
 const UsersList = () => {
   const { data: users, isLoading, isError, error } = useListUsers();
-  console.log(users)
+  
   if (isLoading)
     return <p className="text-center text-blue-500">Loading users...</p>;
   if (isError)

@@ -1,9 +1,10 @@
 
 const express = require('express');
-const { FeedBackForm } = require('../Controller/contactUsController');
+const { FeedBackForm, GetUserComments } = require('../Controller/contactUsController');
 
-const feedBackRoutes = express.Router();    
+const feedBackRoutes = express.Router();
 
-feedBackRoutes.post('/feedBack',FeedBackForm);
+feedBackRoutes.post('/feedBack', FeedBackForm);
+feedBackRoutes.get('/allComments', GetUserComments);
 
 module.exports = feedBackRoutes;

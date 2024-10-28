@@ -24,9 +24,9 @@ const Login = async (req, res) => {
 
     // Success response
     return res.status(200).json({
-       success: "Logged in successfully" ,
-      token: await userCreated.genrateToken()
-      });
+      success: "Logged in successfully",
+      token: await user.genrateToken()
+    });
   } catch (error) {
     console.error("Login error:", error);
     return res.status(500).json({ error: "Internal server error" });
@@ -90,9 +90,10 @@ const GetUsersById = async (_id) => {
   try {
     const users = await User.findById(_id).exec();;
     return users;
-} catch (err) {
+  } catch (err) {
     console.error('Error fetching users:', err);
     throw err;
-}
+  }
 };
+
 module.exports = { Login, Registration, GetUsers, GetUsersById };
