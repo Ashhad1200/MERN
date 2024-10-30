@@ -1,11 +1,12 @@
 import React from 'react';
 import { useListComments } from '../Hooks/useGetComments';
+import LoadingScreen from './Loader';
 
 const Comments = () => {
     const { data: comments, isLoading, isError, error } = useListComments();
 
     if (isLoading) {
-        return <p className="text-center text-blue-500">Loading comments...</p>;
+        return <LoadingScreen/>;
     }
 
     if (isError) {

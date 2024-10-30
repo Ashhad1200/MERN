@@ -10,6 +10,8 @@ import Navbar from "../src/Components/Navbar";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import UserDetails from "./Pages/UserDetails";
+import Comments from "./Components/Comments";
+import UsersList from "./Components/Users";
 
 const queryClient = new QueryClient();
 
@@ -26,6 +28,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/userDetails/:id" element={<UserDetails />} />
+          <Route path="/comments" element={<Comments />} />
+          <Route path="/users" element={<UsersList />} />
         </Routes>
         {/* <Footer /> */}
         <ReactQueryDevtools initialIsOpen={false} />
