@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const url = "http://localhost:8000/contactUs/feedBack"; // Define your API endpoint
+const url = "http://localhost:8000/contactUs/feedBack";
 
 export const useSendFeedback = () => {
     const queryClient = useQueryClient();
@@ -21,12 +21,11 @@ export const useSendFeedback = () => {
                 throw new Error(data.error || "Error sending feedback");
             }
 
-            return data; // Return the response data for onSuccess
+            return data;
         },
         onSuccess: (data) => {
-            console.log(data.success); 
-            queryClient.invalidateQueries({ queryKey: ["comments"] }); // Adjust as necessary
+            queryClient.invalidateQueries({ queryKey: ["comments"] });
         },
-        mutationKey: ["sendFeedback"], // Unique key for this mutation
+        mutationKey: ["sendFeedback"],
     });
 };

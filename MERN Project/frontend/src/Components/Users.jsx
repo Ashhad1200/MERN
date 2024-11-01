@@ -4,9 +4,9 @@ import LoadingScreen from "./Loader";
 
 const UsersList = () => {
   const { data: users, isLoading, isError, error } = useListUsers();
-  
+  const userCount = users ? users.length : 0;
   if (isLoading)
-    return <LoadingScreen/>;
+    return <LoadingScreen />;
   if (isError)
     return <p className="text-center text-red-500">Error: {error}</p>;
 
@@ -14,15 +14,17 @@ const UsersList = () => {
     <div className="container mx-auto p-4">
       <h2 className="text-2xl font-bold mb-4 text-center">Users List</h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-      {users.map((user) => (
-        <div key={user._id} className="bg-gray-100 p-4 rounded-md shadow-md transition-shadow hover:shadow-lg">
-          <Link to={`/userDetails/${user._id}`}>
-            <span className="text-black font-semibold">Username : </span>
-            <span className="text-black">{user.username} </span>
-          </Link>
-        </div>
-      ))}
-    </div>
+        {users.map((user) => (
+          <div key={user._id}>
+            <Link to={`/userDetails/${user._id}`}>
+              <div className="bg-gray-100 p-4 rounded-md shadow-md transition-shadow hover:shadow-lg">
+                <span className="text-black font-semibold">Username : </span>
+                <span className="text-black">{user.username} </span>
+              </div>
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

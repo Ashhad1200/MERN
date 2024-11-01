@@ -11,7 +11,7 @@ const Register = () => {
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [visible, setVisible] = useState(true); // Manage notification visibility
+  const [visible, setVisible] = useState(true);
   const registerMutation = useRegister();
 
   const handleChange = (event) => {
@@ -23,9 +23,8 @@ const Register = () => {
         event.preventDefault();
         registerMutation.mutate(user, {
             onSuccess: (data) => {
-                setSuccessMessage(data.success); // Assuming data contains a success message
+                setSuccessMessage(data.success);
                 setErrorMessage("");
-                // Clear the form
                 setUser({
                     username: "",
                     email: "",
@@ -42,14 +41,14 @@ const Register = () => {
 
   useEffect(() => {
     if (errorMessage || successMessage) {
-      setVisible(true); // Show notification when there's a message
+      setVisible(true);
       const timer = setTimeout(() => {
         setVisible(false);
-        setErrorMessage(""); // Clear error message after hiding
-        setSuccessMessage(""); // Clear success message after hiding
-      }, 5000); // Hide after 5 seconds
+        setErrorMessage("");
+        setSuccessMessage("");
+      }, 5000); 
 
-      return () => clearTimeout(timer); // Cleanup timer on unmount or message change
+      return () => clearTimeout(timer);
     }
   }, [errorMessage, successMessage]);
 

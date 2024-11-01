@@ -9,8 +9,7 @@ const Login = () => {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [visible, setVisible] = useState(true); // For managing notification visibility
-
+  const [visible, setVisible] = useState(true);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUser((prev) => ({ ...prev, [name]: value }));
@@ -33,8 +32,6 @@ const Login = () => {
       if (response.ok) {
         setSuccessMessage(data.success);
         setErrorMessage("");
-
-        // Clear the form
         setUser({ username: "", password: "" });
       } else {
         setSuccessMessage("");
@@ -49,14 +46,13 @@ const Login = () => {
 
   useEffect(() => {
     if (errorMessage || successMessage) {
-      setVisible(true); // Show notification when there's a message
+      setVisible(true);
       const timer = setTimeout(() => {
         setVisible(false);
-        setErrorMessage(""); // Clear error message after hiding
-        setSuccessMessage(""); // Clear success message after hiding
-      }, 5000); // Hide after 5 seconds
-
-      return () => clearTimeout(timer); // Cleanup timer on unmount or message change
+        setErrorMessage("");
+        setSuccessMessage("");
+      }, 5000);
+      return () => clearTimeout(timer);
     }
   }, [errorMessage, successMessage]);
 

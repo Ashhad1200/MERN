@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
-const url = "http://localhost:8000/auth/registration"; // Define your API endpoint
+const url = "http://localhost:8000/auth/registration";
 
 export const useRegister = () => {
     const queryClient = useQueryClient();
@@ -21,13 +21,11 @@ export const useRegister = () => {
                 throw new Error(data.error);
             }
 
-            return data; // Return the response data for onSuccess
+            return data;
         },
         onSuccess: (data) => {
-            // Assuming your API returns a success message
-            console.log(data.success); // Log or handle success as needed
-            queryClient.invalidateQueries({ queryKey: ["users"] }); // Adjust as necessary
+            queryClient.invalidateQueries({ queryKey: ["users"] });
         },
-        mutationKey: ["register"], // Unique key for this mutation
+        mutationKey: ["register"],
     });
 };
