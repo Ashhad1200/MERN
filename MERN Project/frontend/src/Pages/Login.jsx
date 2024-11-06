@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../Hooks/auth";
 
 const Login = () => {
   const [user, setUser] = useState({
@@ -10,6 +11,8 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [visible, setVisible] = useState(true);
+  const storeToken = useAuth();
+
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUser((prev) => ({ ...prev, [name]: value }));
@@ -28,7 +31,9 @@ const Login = () => {
       });
 
       const data = await response.json();
-
+      if (response.ok) {
+        storeToken(data.token);
+    }
       if (response.ok) {
         setSuccessMessage(data.success);
         setErrorMessage("");
@@ -121,7 +126,7 @@ const Login = () => {
             </div>
           </form>
           <div className="text-sm font-light text-[#6B7280]">
-            Don't have an account?{" "}
+            Dont have an account?{" "}
             <Link to="/register" className="font-medium text-[#4F46E5] hover:underline">
               Register
             </Link>
