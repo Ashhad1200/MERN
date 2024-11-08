@@ -6,7 +6,8 @@ const url = "http://localhost:8000/auth/registration";
 export const useRegister = () => {
 
     const queryClient = useQueryClient();
-    const storeToken = useAuth();
+    const { storeToken, storeDetails } = useAuth();
+
 
     return useMutation({
         mutationFn: async (user) => {
@@ -21,6 +22,7 @@ export const useRegister = () => {
             const data = await response.json();
             if (response.ok) {
                 storeToken(data.token);
+                storeDetails(data.details);
             }
 
             if (!response.ok) {

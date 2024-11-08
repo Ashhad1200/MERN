@@ -14,6 +14,7 @@ import UserDetails from "./Pages/UserDetails";
 import Comments from "./Components/Comments";
 import UsersList from "./Components/Users";
 import Footer from "./Components/Footer";
+import { Logout } from "./Hooks/useLogout";
 
 const queryClient = new QueryClient();
 
@@ -30,6 +31,7 @@ function App() {
               <Route path="/contact" element={<Contact />} />
               <Route path="/services" element={<Services />} />
               <Route path="/login" element={<Login />} />
+              <Route path="/logout" element={<Logout />} />
               <Route path="/register" element={<Register />} />
               <Route path="/userDetails/:id" element={<UserDetails />} />
               <Route path="/comments" element={<Comments />} />

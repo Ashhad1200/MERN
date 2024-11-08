@@ -11,7 +11,8 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [visible, setVisible] = useState(true);
-  const storeToken = useAuth();
+  const { storeToken, storeDetails } = useAuth();
+
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -20,7 +21,6 @@ const Login = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(user);
     try {
       const response = await fetch("http://localhost:8000/auth/login", {
         method: "POST",
@@ -31,8 +31,10 @@ const Login = () => {
       });
 
       const data = await response.json();
+
       if (response.ok) {
         storeToken(data.token);
+        storeDetails(data.details);
     }
       if (response.ok) {
         setSuccessMessage(data.success);

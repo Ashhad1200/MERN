@@ -1,4 +1,6 @@
+
 const User = require("../Model/userSchema");
+
 const bcrypt = require("bcrypt");
 
 const Login = async (req, res) => {
@@ -25,8 +27,10 @@ const Login = async (req, res) => {
     // Success response
     return res.status(200).json({
       success: "Logged in successfully",
-      token: await user.genrateToken()
+      token: await user.genrateToken(),
+      details:{user}
     });
+
   } catch (error) {
     console.error("Login error:", error);
     return res.status(500).json({ error: "Internal server error" });
