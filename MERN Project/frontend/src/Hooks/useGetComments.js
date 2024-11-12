@@ -6,14 +6,30 @@ export const useListComments = () => {
   const query = useQuery({
     queryKey: ["comments"],
     queryFn: async () => {
-      const response = await fetch(urlComments);
+      // Retrieve the JWT token from localStorage (or wherever it's stored)
+      const token = localStorage.getItem("Token");
+
+      const response = await fetch(urlComments, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,  // Attach the JWT token here
+        },
+      });
+
       if (!response.ok) {
-        throw new Error(`Error fetching users: ${response.statusText}`);
+        const errorMessage = `Error fetching comments: ${response.status} - ${response.statusText}`;
+        throw new Error(errorMessage);
       }
+
       return response.json();
     },
     staleTime: Infinity,
     cacheTime: Infinity,
+    onError: (error) => {
+      console.error("Error fetching comments:", error);
+    },
   });
+
   return query;
 };

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Hooks/auth";
 
 const Login = () => {
@@ -18,6 +18,9 @@ const Login = () => {
     const { name, value } = event.target;
     setUser((prev) => ({ ...prev, [name]: value }));
   };
+
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -40,6 +43,7 @@ const Login = () => {
         setSuccessMessage(data.success);
         setErrorMessage("");
         setUser({ username: "", password: "" });
+        navigate('/')
       } else {
         setSuccessMessage("");
         setErrorMessage(data.error);

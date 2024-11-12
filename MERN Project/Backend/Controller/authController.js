@@ -1,4 +1,3 @@
-
 const User = require("../Model/userSchema");
 
 const bcrypt = require("bcrypt");
@@ -27,10 +26,8 @@ const Login = async (req, res) => {
     // Success response
     return res.status(200).json({
       success: "Logged in successfully",
-      token: await user.genrateToken(),
-      details:{user}
+      token: await user.generateToken()
     });
-
   } catch (error) {
     console.error("Login error:", error);
     return res.status(500).json({ error: "Internal server error" });
@@ -70,10 +67,9 @@ const Registration = async (req, res) => {
     // Send a single response with success and user details
     return res.status(201).json({
       success: "User created successfully",
-      userDetails: userCreated,
-      token: await userCreated.genrateToken()
+      token: await userCreated.generateToken(),
+      details: { userCreated },
     });
-
   } catch (error) {
     console.error("Registration error:", error);
     return res.status(500).json({ error: "Internal server error" });
@@ -85,17 +81,17 @@ const GetUsers = async (req, res) => {
     const users = await User.find();
     res.status(200).json(users); // Return the users as JSON with a 200 status code
   } catch (err) {
-    console.error('Error fetching users:', err);
-    res.status(500).json({ message: 'Error fetching users' }); // Return error message
+    console.error("Error fetching users:", err);
+    res.status(500).json({ message: "Error fetching users" }); // Return error message
   }
 };
 
 const GetUsersById = async (_id) => {
   try {
-    const users = await User.findById(_id).exec();;
+    const users = await User.findById(_id).exec();
     return users;
   } catch (err) {
-    console.error('Error fetching users:', err);
+    console.error("Error fetching users:", err);
     throw err;
   }
 };

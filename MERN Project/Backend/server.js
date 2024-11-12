@@ -6,16 +6,24 @@ const homeRoutes = require('./Routes/homeRoutes');
 const aboutRoutes = require('./Routes/aboutRoutes');
 const userRoutes = require('./Routes/userRoutes');
 const feedBackRoutes = require('./Routes/feedBackRoutes');
+const verifyToken = require('./MiddleWare/auth');
+// Import the middleware
+require('dotenv').config();
 
 const app = express();
 app.use(express.json());
 app.use(cors());
+
+// Public routes (no token required)
 app.use('/', homeRoutes);
 app.use('/about', aboutRoutes);
-app.use('/user', userRoutes);
 app.use('/auth', authRoutes);
-app.use('/contactUs', feedBackRoutes);
 
+// Protected routes (token required)
+app.use('/user', verifyToken, userRoutes);       // Apply middleware to protect `/user`
+app.use('/contactUs', verifyToken, feedBackRoutes); // Protect `/contactUs`
+
+// Start the database and server
 connectDb().then(() => {
     app.listen(8000, () => {
         console.log('server started');

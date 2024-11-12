@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema({
   joiningDate: { type: Date, default: Date.now, required: true },
 });
 
-userSchema.methods.genrateToken = async () => {
+userSchema.methods.generateToken = function () {  // Change to a regular function
   try {
     return jwt.sign(
       {
@@ -20,13 +20,15 @@ userSchema.methods.genrateToken = async () => {
         phone: this.phone,
         isAdmin: this.isAdmin,
       },
-      "blabla",
+      process.env.JWT_SECRET,  // Replace with your secret key, and store it securely in an environment variable
       { expiresIn: "7d" }
-    )
+    );
   } catch (error) {
-    console.error(error);
+    console.error("Error generating token:", error);
+    return null;
   }
-}
+};
+
 
 const User = mongoose.model("User", userSchema);
 

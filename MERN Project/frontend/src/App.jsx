@@ -14,7 +14,8 @@ import UserDetails from "./Pages/UserDetails";
 import Comments from "./Components/Comments";
 import UsersList from "./Components/Users";
 import Footer from "./Components/Footer";
-import { Logout } from "./Hooks/useLogout";
+import PrivateRoute from "./Components/PrivateRoute";
+// Import the PrivateRoute component
 
 const queryClient = new QueryClient();
 
@@ -26,16 +27,20 @@ function App() {
           <Navbar />
           <div className="flex-grow m-10">
             <Routes>
-              <Route path="/" element={<Home />} />
+              {/* Public Routes */}
               <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
               <Route path="/services" element={<Services />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/logout" element={<Logout />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/userDetails/:id" element={<UserDetails />} />
-              <Route path="/comments" element={<Comments />} />
-              <Route path="/users" element={<UsersList />} />
+
+              {/* Protected Routes */}
+              <Route element={<PrivateRoute />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/userDetails/:id" element={<UserDetails />} />
+                <Route path="/comments" element={<Comments />} />
+                <Route path="/users" element={<UsersList />} />
+              </Route>
             </Routes>
           </div>
           <Footer />
