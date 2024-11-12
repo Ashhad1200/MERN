@@ -11,7 +11,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [visible, setVisible] = useState(true);
-  const { storeToken, storeDetails } = useAuth();
+  const { storeToken } = useAuth();
 
 
   const handleChange = (event) => {
@@ -37,7 +37,6 @@ const Login = () => {
 
       if (response.ok) {
         storeToken(data.token);
-        storeDetails(data.details);
     }
       if (response.ok) {
         setSuccessMessage(data.success);

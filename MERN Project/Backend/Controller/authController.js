@@ -68,7 +68,6 @@ const Registration = async (req, res) => {
     return res.status(201).json({
       success: "User created successfully",
       token: await userCreated.generateToken(),
-      details: { userCreated },
     });
   } catch (error) {
     console.error("Registration error:", error);
