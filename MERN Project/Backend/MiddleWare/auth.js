@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../Model/userSchema");
 
 const verifyToken = async (req, res, next) => {
+  
   const authHeader = req.headers.authorization;
 
   // Check if authorization header exists and starts with 'Bearer '

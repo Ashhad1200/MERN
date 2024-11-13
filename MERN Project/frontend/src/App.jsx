@@ -15,6 +15,7 @@ import Comments from "./Components/Comments";
 import UsersList from "./Components/Users";
 import Footer from "./Components/Footer";
 import PrivateRoute from "./Components/PrivateRoute";
+import Admin from "./Pages/Admin";
 // Import the PrivateRoute component
 
 const queryClient = new QueryClient();
@@ -37,6 +38,7 @@ function App() {
               <Route element={<PrivateRoute />}>
                 <Route path="/" element={<Home />} />
                 <Route path="/contact" element={<Contact />} />
+                <Route path="/admin" element={<Admin />} />
                 <Route path="/userDetails/:id" element={<UserDetails />} />
                 <Route path="/comments" element={<Comments />} />
                 <Route path="/users" element={<UsersList />} />
