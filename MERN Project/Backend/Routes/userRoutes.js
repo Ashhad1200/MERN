@@ -1,10 +1,12 @@
 const express = require('express');
 const User = require("../Controller/userController");
-const { GetUsers, GetUsersById } = require('../Controller/authController');
+const { GetUsers, GetUsersById, AuthMe } = require('../Controller/authController');
 const { default: mongoose } = require('mongoose');
 const userRoutes = express.Router();
 
 userRoutes.get('/users',GetUsers)
+
+userRoutes.get('/profile', AuthMe );
 
 userRoutes.get('/users/:id', async (req, res) => {
     const userId = req.params.id;

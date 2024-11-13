@@ -1,3 +1,4 @@
+const verifyToken = require("../MiddleWare/auth");
 const User = require("../Model/userSchema");
 
 const bcrypt = require("bcrypt");
@@ -26,7 +27,7 @@ const Login = async (req, res) => {
     // Success response
     return res.status(200).json({
       success: "Logged in successfully",
-      token: await user.generateToken()
+      token: await user.generateToken(),
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -75,6 +76,29 @@ const Registration = async (req, res) => {
   }
 };
 
+// This is an updated version for Express-based usage.
+const AuthMe = (req, res) => {
+  try {
+    // Access the user details from req.user which was set by verifyToken middleware
+    const userDetails = req.user;
+
+    // If userDetails is undefined, something went wrong (e.g., no token or invalid token)
+    if (!userDetails) {
+      return res
+        .status(401)
+        .json({ error: "User not found or not authenticated" });
+    }
+
+    // Return the user details as a response
+    return res.status(200).json({ userDetails });
+  } catch (err) {
+    console.error("Error fetching Logged User Details", err);
+    return res
+      .status(500)
+      .json({ error: "Error fetching logged user details" });
+  }
+};
+
 const GetUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -95,4 +119,4 @@ const GetUsersById = async (_id) => {
   }
 };
 
-module.exports = { Login, Registration, GetUsers, GetUsersById };
+module.exports = { Login, Registration, GetUsers, GetUsersById, AuthMe };
