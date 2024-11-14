@@ -1,12 +1,13 @@
 import { useParams } from 'react-router-dom';
 import { useUser } from '../Hooks/useUsers';
+import LoadingScreen from '../Components/Loader';
 
 const UserDetails = () => {
     const { id } = useParams();
     const { data, isLoading, isError, error } = useUser(id);
 
     if (isLoading) {
-        return <div className="text-center text-gray-500">Loading...</div>;
+        return <div className="text-center text-gray-500"><LoadingScreen/></div>;
     }
 
     if (isError) {
