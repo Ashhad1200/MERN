@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { useListUsers } from "../Hooks/useUsers";
 import { useListComments } from "../Hooks/useGetComments";
-import { FaUsers, FaComments, FaCog } from "react-icons/fa";
+import { FaUsers, FaComments } from "react-icons/fa";
 
 const Admin = () => {
   const { data: users, isLoading: isLoadingUsers, error: errorUsers } = useListUsers();
