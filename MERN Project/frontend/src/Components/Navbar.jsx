@@ -110,13 +110,15 @@ const Navbar = () => {
             )}
 
             {isAdmin && (
-              <Link
-                to="/admin"
-                className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200"
-              >
-                <FaUserShield />
-                <span>Admin</span>
-              </Link>
+              <>
+                <Link
+                  to="/admin"
+                  className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200"
+                >
+                  <FaUserShield />
+                  <span>Admin</span>
+                </Link>
+              </>
             )}
             <Link
               to="/profile"

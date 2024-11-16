@@ -7,6 +7,7 @@ const aboutRoutes = require('./Routes/aboutRoutes');
 const userRoutes = require('./Routes/userRoutes');
 const feedBackRoutes = require('./Routes/feedBackRoutes');
 const verifyToken = require('./MiddleWare/auth');
+const servicesRoutes = require('./Routes/servicesRoutes');
 // Import the middleware
 require('dotenv').config();
 
@@ -22,6 +23,7 @@ app.use('/auth', authRoutes);
 // Protected routes (token required)
 app.use('/user', verifyToken, userRoutes);       // Apply middleware to protect `/user`
 app.use('/contactUs', verifyToken, feedBackRoutes); // Protect `/contactUs`
+app.use('/services', verifyToken, servicesRoutes);
 
 // Start the database and server
 connectDb().then(() => {
