@@ -1,12 +1,28 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../Hooks/auth";
-import { FaHome, FaInfoCircle, FaEnvelope, FaTools, FaUser, FaSignInAlt, FaUserPlus, FaSignOutAlt, FaUserShield, FaBars } from "react-icons/fa";
+import {
+  FaHome,
+  FaInfoCircle,
+  FaEnvelope,
+  FaTools,
+  FaUser,
+  FaSignInAlt,
+  FaUserPlus,
+  FaSignOutAlt,
+  FaUserShield,
+  FaBars,
+} from "react-icons/fa";
 import { useState } from "react";
+import { useProfile } from "../Hooks/useGetProfile";
 
 const Navbar = () => {
   const { logout, isLoggedIn } = useAuth();
   const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const { data } = useProfile();
+  const { userDetails } = data || {};
+  const { isAdmin } = userDetails || {};
 
   const handleLogout = async () => {
     try {
@@ -38,19 +54,31 @@ const Navbar = () => {
           } lg:flex lg:items-center lg:space-x-8 lg:ml-auto w-full lg:w-auto mt-4 lg:mt-0`}
         >
           <div className="flex flex-col lg:flex-row lg:space-x-8 text-center">
-            <Link to="/" className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200">
+            <Link
+              to="/"
+              className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200"
+            >
               <FaHome />
               <span>Home</span>
             </Link>
-            <Link to="/about" className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200">
+            <Link
+              to="/about"
+              className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200"
+            >
               <FaInfoCircle />
               <span>About</span>
             </Link>
-            <Link to="/contact" className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200">
+            <Link
+              to="/contact"
+              className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200"
+            >
               <FaEnvelope />
               <span>Contact</span>
             </Link>
-            <Link to="/services" className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200">
+            <Link
+              to="/services"
+              className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200"
+            >
               <FaTools />
               <span>Services</span>
             </Link>
@@ -64,21 +92,36 @@ const Navbar = () => {
               </button>
             ) : (
               <>
-                <Link to="/login" className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200">
+                <Link
+                  to="/login"
+                  className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200"
+                >
                   <FaSignInAlt />
                   <span>Login</span>
                 </Link>
-                <Link to="/register" className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200">
+                <Link
+                  to="/register"
+                  className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200"
+                >
                   <FaUserPlus />
                   <span>Register</span>
                 </Link>
               </>
             )}
-            <Link to="/admin" className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200">
-              <FaUserShield />
-              <span>Admin</span>
-            </Link>
-            <Link to="/profile" className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200">
+
+            {isAdmin && (
+              <Link
+                to="/admin"
+                className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200"
+              >
+                <FaUserShield />
+                <span>Admin</span>
+              </Link>
+            )}
+            <Link
+              to="/profile"
+              className="flex items-center justify-center space-x-2 text-gray-100 hover:text-white transition duration-200"
+            >
               <FaUser />
               <span>Profile</span>
             </Link>
