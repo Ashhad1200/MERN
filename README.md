@@ -1,3 +1,7 @@
+Here's the updated `README.md` with **React Query** included:
+
+---
+
 # MERN Project
 
 ## Overview
@@ -8,9 +12,12 @@ This repository showcases a full-stack web application built with the **MERN** s
 - **React.js**: For building a responsive and dynamic front-end.
 - **Node.js**: For backend runtime.
 
+Additionally, it leverages **React Query** to manage server state efficiently and improve data fetching and caching.
+
 ## Features
 - User authentication and authorization.
 - CRUD operations for [your key entities, e.g., posts, users].
+- Efficient server-state management using React Query.
 - Responsive design with React.
 - RESTful APIs for seamless client-server communication.
 - Scalable and maintainable project structure.
@@ -48,12 +55,12 @@ This repository showcases a full-stack web application built with the **MERN** s
    - Start the backend server:
      ```bash
      cd backend
-     npm start
+     npm run start
      ```
    - Start the frontend development server:
      ```bash
      cd frontend
-     npm start
+     npm run dev
      ```
 
 5. Access the application:
@@ -61,14 +68,44 @@ This repository showcases a full-stack web application built with the **MERN** s
 
 ## Folder Structure
 - **backend/**: Contains the server-side code with routes, models, and controllers.
-- **frontend/**: Contains React components, hooks, and styling for the client-side.
+- **frontend/**: Contains React components, hooks, React Query integration, and styling for the client-side.
 
 ## Technologies Used
-- **Frontend**: React, Axios
+- **Frontend**: React, React Query, Axios
 - **Backend**: Node.js, Express
 - **Database**: MongoDB
 - **Authentication**: JSON Web Tokens (JWT)
 - **Styling**: [Mention your styling tools if used, e.g., Bootstrap, TailwindCSS]
+
+## Using React Query
+The project integrates **React Query** for:
+- Data fetching with automatic caching.
+- Server state synchronization.
+- Smooth UI updates with background refetching.
+
+Key hooks used:
+- `useQuery` for fetching data.
+- `useMutation` for submitting data changes.
+
+### Example (Frontend Code Snippet)
+```jsx
+import { useQuery } from 'react-query';
+import axios from 'axios';
+
+const fetchData = async () => {
+  const { data } = await axios.get('/api/resource');
+  return data;
+};
+
+const MyComponent = () => {
+  const { data, isLoading, error } = useQuery('resourceKey', fetchData);
+
+  if (isLoading) return <p>Loading...</p>;
+  if (error) return <p>Error fetching data</p>;
+
+  return <div>{JSON.stringify(data)}</div>;
+};
+```
 
 ## Contributing
 Contributions are welcome! To contribute:
@@ -80,7 +117,3 @@ Contributions are welcome! To contribute:
 
 ## License
 This project is licensed under the [MIT License](LICENSE).
-
----
-
-Feel free to adapt this to your project's specifics! Let me know if you'd like to add or modify anything further.
