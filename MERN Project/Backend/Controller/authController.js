@@ -119,4 +119,21 @@ const GetUsersById = async (_id) => {
   }
 };
 
-module.exports = { Login, Registration, GetUsers, GetUsersById, AuthMe };
+const DeleteUsers = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const result = await User.findByIdAndDelete(id); // Use the correct model name
+
+    if (!result) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'User deleted successfully', deletedUser: result });
+  } catch (error) {
+    console.error('Error deleting user:', error);
+    res.status(500).json({ message: 'Failed to delete user', error: error.message });
+  }
+};
+
+module.exports = { Login, Registration, GetUsers, GetUsersById, AuthMe, DeleteUsers };

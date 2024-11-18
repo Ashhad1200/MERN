@@ -11,6 +11,7 @@ import ProtectAdmin from "./Components/ProtectAdmin";
 import UnauthorizedPage from "./Components/unauthorized";
 import LoadingScreen from "./Components/Loader";
 import AddServices from "./Components/AddServices";
+import ViewServices from "./Components/ViewServices";
 
 const Home = lazy(() => import("./Pages/Home"));
 const About = lazy(() => import("./Pages/About"));
@@ -62,6 +63,7 @@ function App() {
                   <Route element={<ProtectAdmin />}>
                     <Route path="/admin" element={<Admin />} />
                     <Route path="/addServices" element={<AddServices />} />
+                    <Route path="/viewServices" element={<ViewServices />} />
                   </Route>
                 </Route>
               </Routes>

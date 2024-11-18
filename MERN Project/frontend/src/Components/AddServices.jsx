@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useAddServices } from "../Hooks/useAddServices"; // Ensure this hook is properly implemented
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const AddServices = () => {
   const [formData, setFormData] = useState({
@@ -8,7 +10,7 @@ const AddServices = () => {
   });
 
   const addServiceMutation = useAddServices();
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -19,6 +21,8 @@ const AddServices = () => {
     // Call mutation to add the service
     addServiceMutation.mutate(formData, {
       onSuccess: () => {
+        toast.success("Service added successfully!");
+        navigate("/services");
         setFormData({
           name: "",
           description: "",

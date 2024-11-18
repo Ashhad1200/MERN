@@ -4,6 +4,7 @@ const {
   GetUsers,
   GetUsersById,
   AuthMe,
+  DeleteUsers,
 } = require("../Controller/authController");
 const { default: mongoose } = require("mongoose");
 const userRoutes = express.Router();
@@ -33,5 +34,7 @@ userRoutes.get("/users/:id", async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 });
+
+userRoutes.delete = ("/users/:id",DeleteUsers);
 
 module.exports = userRoutes;

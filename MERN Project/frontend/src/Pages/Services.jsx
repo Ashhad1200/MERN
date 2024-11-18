@@ -32,7 +32,7 @@ const Services = () => {
           {/* Map through services and render them dynamically */}
           {services.map((service) => (
             <div
-              key={service.id} // assuming each service has a unique 'id' field
+              key={service._id} // assuming each service has a unique 'id' field
               className="bg-gray-800 shadow-lg p-6 rounded-xl text-center transition-transform transform hover:scale-105"
             >
               <h3 className="text-2xl font-semibold mb-4 text-purple-400">

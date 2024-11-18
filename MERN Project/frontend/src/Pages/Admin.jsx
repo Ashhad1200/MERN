@@ -94,7 +94,7 @@ const Admin = () => {
               </div>
             </div>
             <p className="text-gray-700 mt-4">Manage and view available services.</p>
-            <Link to="/services" className="mt-4 inline-block text-purple-500 hover:underline">
+            <Link to="/viewServices" className="mt-4 inline-block text-purple-500 hover:underline">
               Go to Services
             </Link>
           </div>

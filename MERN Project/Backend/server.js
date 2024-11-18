@@ -21,7 +21,7 @@ app.use('/about', aboutRoutes);
 app.use('/auth', authRoutes);
 
 // Protected routes (token required)
-app.use('/user', verifyToken, userRoutes);       // Apply middleware to protect `/user`
+app.use('/user', verifyToken, userRoutes); // Apply middleware to protect `/user`
 app.use('/contactUs', verifyToken, feedBackRoutes); // Protect `/contactUs`
 app.use('/services', verifyToken, servicesRoutes);
 

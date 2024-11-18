@@ -20,6 +20,24 @@ const servicesForm = async (req, res) => {
     }
 };
 
+const DeleteService = async (req, res) => {
+    const { id } = req.params;
+    try {
+      const result = await Services.findByIdAndDelete(id); // Use the correct model name
+      if (!result) {
+        return res.status(404).json({ message: "Services not found" });
+      }
+      res
+        .status(200)
+        .json({ message: "Services deleted successfully", deletedServices: result });
+    } catch (error) {
+      console.error("Error deleting Services:", error);
+      res
+        .status(500)
+        .json({ message: "Failed to delete Services", error: error.message });
+    }
+  };
+
 
 const GetServices = async (req, res) => {
     try {
@@ -31,4 +49,4 @@ const GetServices = async (req, res) => {
     }
 };
 
-module.exports = { servicesForm, GetServices };
+module.exports = { servicesForm, GetServices, DeleteService };
