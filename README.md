@@ -1,7 +1,3 @@
-Here's the updated `README.md` with **React Query** included:
-
----
-
 # MERN Project
 
 ## Overview
