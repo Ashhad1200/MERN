@@ -6,7 +6,9 @@ const {
   AuthMe,
   DeleteUsers,
 } = require("../Controller/authController");
+
 const { default: mongoose } = require("mongoose");
+
 const userRoutes = express.Router();
 
 userRoutes.get("/users", GetUsers);
