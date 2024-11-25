@@ -19,22 +19,20 @@ export const useListUsers = () => {
 
       return response.data; // Axios automatically parses JSON responses
     },
-    staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   return query;
 };
-export const useUser = (_id) => {
+export const useUser = (id) => {
   const query = useQuery({
-    queryKey: ["user", !!_id],
+    queryKey: ["user",id],
     queryFn: async () => {
       // Retrieve the token from local storage or your app's state management
       const token = localStorage.getItem("Token");
 
       // Use axios to make the request, including the Authorization header
       const response = await axios.get(
-        `http://localhost:8000/user/users/${_id}`,
+        `http://localhost:8000/user/users/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`, // Add the token to the Authorization header
@@ -44,8 +42,6 @@ export const useUser = (_id) => {
 
       return response.data; // Axios automatically parses JSON responses
     },
-    staleTime: Infinity,
-    cacheTime: Infinity,
   });
 
   return query;

@@ -8,9 +8,11 @@ const userSchema = new mongoose.Schema({
   phone: { type: Number, required: true },
   isAdmin: { type: Boolean, default: false },
   joiningDate: { type: Date, default: Date.now, required: true },
+  refreshToken: { type: String }
 });
 
-userSchema.methods.generateToken = function () {  // Change to a regular function
+userSchema.methods.generateToken = function () {
+  // Change to a regular function
   try {
     return jwt.sign(
       {
@@ -20,8 +22,8 @@ userSchema.methods.generateToken = function () {  // Change to a regular functio
         phone: this.phone,
         isAdmin: this.isAdmin,
       },
-      process.env.JWT_SECRET,  // Replace with your secret key, and store it securely in an environment variable
-      { expiresIn: "7d" }
+      process.env.JWT_SECRET, // Replace with your secret key, and store it securely in an environment variable
+      { expiresIn: "6m" }
     );
   } catch (error) {
     console.error("Error generating token:", error);
@@ -29,6 +31,21 @@ userSchema.methods.generateToken = function () {  // Change to a regular functio
   }
 };
 
+userSchema.methods.generateRefreshToken = function () {
+  try {
+    // Generate refresh token
+    const refreshToken = jwt.sign(
+      { id: this._id, phone: this.phone, isAdmin: this.isAdmin }, // Only include essential information
+      process.env.REFRESH_SECRET, // Use environment variable for the secret
+      { expiresIn: "30d" } // Adjust expiration to your app's security needs
+    );
+
+    return refreshToken;
+  } catch (error) {
+    console.error("Error generating refresh refreshToken:", error);
+    return null;
+  }
+};
 
 const User = mongoose.model("User", userSchema);
 

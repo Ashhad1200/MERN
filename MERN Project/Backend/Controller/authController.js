@@ -15,19 +15,21 @@ const Login = async (req, res) => {
     // Find user by username
     const user = await User.findOne({ username });
     if (!user) {
-      return res.status(400).json({ error: "Invalid credentials" });
+      return res.status(400).json({ error: "Invalid username or password" });
     }
 
     // Compare password
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return res.status(400).json({ error: "Invalid credentials" });
+      return res.status(400).json({ error: "Invalid username or password" });
     }
 
-    // Success response
+    const token = await user.generateToken();
+
     return res.status(200).json({
       success: "Logged in successfully",
-      token: await user.generateToken(),
+      token,
+      refreshToken :  user.refreshToken,
     });
   } catch (error) {
     console.error("Login error:", error);
@@ -64,11 +66,18 @@ const Registration = async (req, res) => {
       password: hashedPassword,
       phone,
     });
+    const refreshToken = await userCreated.generateRefreshToken();
+    userCreated.refreshToken = refreshToken;
+    await userCreated.save();
+
+    const token = await userCreated.generateToken();
+
 
     // Send a single response with success and user details
     return res.status(201).json({
       success: "User created successfully",
-      token: await userCreated.generateToken(),
+      token,
+      refreshToken
     });
   } catch (error) {
     console.error("Registration error:", error);
@@ -76,7 +85,6 @@ const Registration = async (req, res) => {
   }
 };
 
-// This is an updated version for Express-based usage.
 const AuthMe = (req, res) => {
   try {
     // Access the user details from req.user which was set by verifyToken middleware
@@ -124,16 +132,25 @@ const DeleteUsers = async (req, res) => {
 
   try {
     const result = await User.findByIdAndDelete(id); // Use the correct model name
-
     if (!result) {
-      return res.status(404).json({ message: 'User not found' });
+      return res.status(403).json({ message: "User not found" });
     }
-
-    res.status(200).json({ message: 'User deleted successfully', deletedUser: result });
+    res
+      .status(200)
+      .json({ message: "User deleted successfully", deletedUser: result });
   } catch (error) {
-    console.error('Error deleting user:', error);
-    res.status(500).json({ message: 'Failed to delete user', error: error.message });
+    console.error("Error deleting user:", error);
+    res
+      .status(500)
+      .json({ message: "Failed to delete user", error: error.message });
   }
 };
 
-module.exports = { Login, Registration, GetUsers, GetUsersById, AuthMe, DeleteUsers };
+module.exports = {
+  Login,
+  Registration,
+  GetUsers,
+  GetUsersById,
+  AuthMe,
+  DeleteUsers,
+};

@@ -8,6 +8,9 @@ const userRoutes = require('./Routes/userRoutes');
 const feedBackRoutes = require('./Routes/feedBackRoutes');
 const verifyToken = require('./MiddleWare/auth');
 const servicesRoutes = require('./Routes/servicesRoutes');
+const tokenRoutes = require('./Routes/refreshTokenRoutes');
+
+
 // Import the middleware
 require('dotenv').config();
 
@@ -19,6 +22,7 @@ app.use(cors());
 app.use('/', homeRoutes);
 app.use('/about', aboutRoutes);
 app.use('/auth', authRoutes);
+app.use('/refresh', tokenRoutes );
 
 // Protected routes (token required)
 app.use('/user', verifyToken, userRoutes); // Apply middleware to protect `/user`

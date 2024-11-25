@@ -1,4 +1,4 @@
-import { Suspense, lazy } from "react";
+import { Suspense, lazy, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -12,6 +12,8 @@ import UnauthorizedPage from "./Components/unauthorized";
 import LoadingScreen from "./Components/Loader";
 import AddServices from "./Components/AddServices";
 import ViewServices from "./Components/ViewServices";
+import { scheduleTokenRefresh, isTokenExpired } from "./Hooks/authUtils";
+import { RefreshToken } from "./Hooks/refreshToken";
 
 const Home = lazy(() => import("./Pages/Home"));
 const About = lazy(() => import("./Pages/About"));
@@ -35,6 +37,40 @@ const queryClient = new QueryClient({
 });
 
 function App() {
+  useEffect(() => {
+    const initializeAuth = async () => {
+      const accessToken = localStorage.getItem("Token");
+      const refreshToken = localStorage.getItem("refreshToken");
+
+      // Check if the refresh token exists
+      if (!refreshToken) {
+        console.warn("No refresh token found. Please log in again.");
+        return;
+      }
+
+      // If the access token doesn't exist or is expired, refresh it
+      if (!accessToken || isTokenExpired(accessToken)) {
+        try {
+          // After refreshing, schedule the next refresh of tokens
+          scheduleTokenRefresh(refreshToken, async () => {
+          console.log("refreshToken needs to be refreshed")
+            await RefreshToken(refreshToken);
+          });
+        } catch (error) {
+          console.error("Error refreshing access token:", error);
+        }
+      } else {
+        // If the access token is still valid, just schedule the next refresh
+        scheduleTokenRefresh(refreshToken, async () => {
+          await RefreshToken(refreshToken);
+        });
+      }
+    };
+
+    // Run initialization on app load
+    initializeAuth();
+  }, []); // Empty dependency array ensures this runs once when the component mounts
+
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
@@ -48,7 +84,10 @@ function App() {
                 <Route path="/services" element={<Services />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                <Route path="/unauthorizedPage" element={<UnauthorizedPage />} />
+                <Route
+                  path="/unauthorizedPage"
+                  element={<UnauthorizedPage />}
+                />
 
                 {/* Protected Routes */}
                 <Route element={<PrivateRoute />}>

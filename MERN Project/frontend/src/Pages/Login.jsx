@@ -5,20 +5,18 @@ import { useAuth } from "../Hooks/auth";
 const Login = () => {
   const [user, setUser] = useState({
     username: "",
-    password: ""
+    password: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [visible, setVisible] = useState(true);
-  const { storeToken } = useAuth();
-
+  const { storeToken, storeRefreshToken } = useAuth();
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setUser((prev) => ({ ...prev, [name]: value }));
   };
-
 
   const navigate = useNavigate();
 
@@ -37,12 +35,13 @@ const Login = () => {
 
       if (response.ok) {
         storeToken(data.token);
-    }
+        storeRefreshToken(data.refreshToken);
+      }
       if (response.ok) {
         setSuccessMessage(data.success);
         setErrorMessage("");
         setUser({ username: "", password: "" });
-        navigate('/')
+        navigate("/");
       } else {
         setSuccessMessage("");
         setErrorMessage(data.error);
@@ -75,8 +74,16 @@ const Login = () => {
           </h2>
 
           {visible && errorMessage && (
-            <div className="fixed top-4 right-4 p-4 mb-4 text-sm text-red-500 bg-red-100 border border-red-200 rounded-lg shadow-md" role="alert">
-              <svg className="w-5 h-5 mr-2 inline" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+            <div
+              className="fixed top-4 right-4 p-4 mb-4 text-sm text-red-500 bg-red-100 border border-red-200 rounded-lg shadow-md"
+              role="alert"
+            >
+              <svg
+                className="w-5 h-5 mr-2 inline"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
                 <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM9 15H11V13H9v2zM9 11H11V5H9v6z" />
               </svg>
               <span className="font-medium">Error: {errorMessage}!</span>
@@ -84,8 +91,16 @@ const Login = () => {
           )}
 
           {visible && successMessage && (
-            <div className="fixed top-4 right-4 p-4 mb-4 text-sm text-green-700 bg-green-100 border border-green-200 rounded-lg shadow-md" role="alert">
-              <svg className="w-5 h-5 mr-2 inline" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20">
+            <div
+              className="fixed top-4 right-4 p-4 mb-4 text-sm text-green-700 bg-green-100 border border-green-200 rounded-lg shadow-md"
+              role="alert"
+            >
+              <svg
+                className="w-5 h-5 mr-2 inline"
+                aria-hidden="true"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
                 <path d="M10 0C4.477 0 0 4.477 0 10s4.477 10 10 10 10-4.477 10-10S15.523 0 10 0zM9 15H11V13H9v2zM9 11H11V5H9v6z" />
               </svg>
               <span className="font-medium">Success: {successMessage}!</span>
@@ -94,7 +109,9 @@ const Login = () => {
 
           <form className="space-y-6 mt-6" onSubmit={handleSubmit}>
             <div>
-              <label className="block text-sm font-medium leading-6 text-white">Username</label>
+              <label className="block text-sm font-medium leading-6 text-white">
+                Username
+              </label>
               <div className="mt-2">
                 <input
                   name="username"
@@ -108,7 +125,9 @@ const Login = () => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium leading-6 text-white">Password</label>
+              <label className="block text-sm font-medium leading-6 text-white">
+                Password
+              </label>
               <div className="mt-2">
                 <input
                   name="password"
@@ -132,7 +151,10 @@ const Login = () => {
           </form>
           <div className="text-sm font-light text-[#6B7280]">
             Dont have an account?{" "}
-            <Link to="/register" className="font-medium text-[#4F46E5] hover:underline">
+            <Link
+              to="/register"
+              className="font-medium text-[#4F46E5] hover:underline"
+            >
               Register
             </Link>
           </div>
