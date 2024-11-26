@@ -23,7 +23,7 @@ const RefreshToken = async (req, res) => {
       }
 
       // Check if the refresh token matches
-      if (user.refreshToken != refreshToken) {
+      if (user.refreshToken !== refreshToken) {
         return res.status(403).json({ error: "Token mismatch!" });
       }
 

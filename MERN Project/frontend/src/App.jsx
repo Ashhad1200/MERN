@@ -39,38 +39,43 @@ const queryClient = new QueryClient({
 function App() {
   useEffect(() => {
     const initializeAuth = async () => {
+      console.log("Initializing authentication...");
+  
       const accessToken = localStorage.getItem("Token");
       const refreshToken = localStorage.getItem("refreshToken");
-
-      // Check if the refresh token exists
+  
       if (!refreshToken) {
         console.warn("No refresh token found. Please log in again.");
         return;
       }
-
-      // If the access token doesn't exist or is expired, refresh it
+  
       if (!accessToken || isTokenExpired(accessToken)) {
+        console.log("Access token is missing or expired. Attempting to refresh...");
         try {
-          // After refreshing, schedule the next refresh of tokens
+          await RefreshToken(refreshToken);
+          console.log("Access token successfully refreshed.");
+  
           scheduleTokenRefresh(refreshToken, async () => {
-          console.log("refreshToken needs to be refreshed")
+            console.log("Scheduled token refresh triggered.");
             await RefreshToken(refreshToken);
+            console.log("Access token refreshed successfully after schedule.");
           });
         } catch (error) {
           console.error("Error refreshing access token:", error);
         }
       } else {
-        // If the access token is still valid, just schedule the next refresh
+        console.log("Access token is still valid. Scheduling the next refresh...");
         scheduleTokenRefresh(refreshToken, async () => {
+          console.log("Scheduled token refresh triggered.");
           await RefreshToken(refreshToken);
+          console.log("Access token refreshed successfully after schedule.");
         });
       }
     };
-
-    // Run initialization on app load
+  
     initializeAuth();
   }, []); // Empty dependency array ensures this runs once when the component mounts
-
+  
   return (
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>

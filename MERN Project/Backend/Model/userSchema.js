@@ -23,7 +23,7 @@ userSchema.methods.generateToken = function () {
         isAdmin: this.isAdmin,
       },
       process.env.JWT_SECRET, // Replace with your secret key, and store it securely in an environment variable
-      { expiresIn: "6m" }
+      { expiresIn: "15m" }
     );
   } catch (error) {
     console.error("Error generating token:", error);

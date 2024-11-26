@@ -37,6 +37,6 @@ userRoutes.get("/users/:id", async (req, res) => {
   }
 });
 
-userRoutes.delete = ("/users/:id",DeleteUsers);
+userRoutes.delete("/users/:id",DeleteUsers);
 
 module.exports = userRoutes;
