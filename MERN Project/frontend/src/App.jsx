@@ -14,6 +14,7 @@ import AddServices from "./Components/AddServices";
 import ViewServices from "./Components/ViewServices";
 import { scheduleTokenRefresh, isTokenExpired } from "./Hooks/authUtils";
 import { RefreshToken } from "./Hooks/refreshToken";
+import { EditUser } from "./Components/EditUser";
 
 const Home = lazy(() => import("./Pages/Home"));
 const About = lazy(() => import("./Pages/About"));
@@ -108,6 +109,7 @@ function App() {
                     <Route path="/admin" element={<Admin />} />
                     <Route path="/addServices" element={<AddServices />} />
                     <Route path="/viewServices" element={<ViewServices />} />
+                    <Route path="/editUser/:id" element={<EditUser />} />
                   </Route>
                 </Route>
               </Routes>

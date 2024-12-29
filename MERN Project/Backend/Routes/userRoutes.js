@@ -5,6 +5,7 @@ const {
   GetUsersById,
   AuthMe,
   DeleteUsers,
+  UpdateUser,
 } = require("../Controller/authController");
 
 const { default: mongoose } = require("mongoose");
@@ -38,5 +39,7 @@ userRoutes.get("/users/:id", async (req, res) => {
 });
 
 userRoutes.delete("/users/:id",DeleteUsers);
+
+userRoutes.put("/update/user/:id",UpdateUser);
 
 module.exports = userRoutes;

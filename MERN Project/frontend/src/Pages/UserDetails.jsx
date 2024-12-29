@@ -71,13 +71,22 @@ const UserDetails = () => {
         </div>
       )}
 
-      {/* Delete Button */}
-      <div className="flex justify-end mt-6">
+      {/* Buttons Section */}
+      <div className="flex justify-between mt-6">
+        {/* Edit Button */}
         <button
-          className={`w-full bg-red-500 text-white font-semibold py-2 rounded-lg hover:bg-red-600 active:scale-95 transform transition-transform ${
-            isDeleting ? "opacity-50 cursor-not-allowed" : ""
-          }`}
+          onClick={() => navigate(`/editUser/${data._id}`)} 
+          className="w-full bg-blue-500 text-white font-semibold py-2 rounded-lg hover:bg-blue-600 active:scale-95 transform transition-transform"
+        >
+          Edit User
+        </button>
+
+        {/* Delete Button */}
+        <button
+          className={`w-full bg-red-500 text-white font-semibold py-2 rounded-lg hover:bg-red-600 active:scale-95 transform transition-transform ${isDeleting ? "opacity-50 cursor-not-allowed" : ""
+            }`}
           onClick={handleDelete}
+
           disabled={isDeleting}
         >
           {isDeleting ? "Deleting..." : "Delete User"}
